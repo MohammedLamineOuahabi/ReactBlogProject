@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
 import Axios from "axios";
+
+import { CSSTransition } from "react-transition-group";
+
 Axios.defaults.baseURL = "http://localhost:8080";
 //our components
 import Header from "./components/header";
@@ -16,6 +19,7 @@ import FlashMessages from "./components/flashMessages";
 import Profile from "./components/profile";
 import EditPost from "./components/editPost";
 import NotFound from "./components/notFound";
+import Search from "./components/search";
 
 import StateContext from "./context/StateContext";
 import DispatchContext from "./context/DispatchContext";
@@ -28,7 +32,8 @@ function OurApp() {
       token: localStorage.getItem("ourAppToken"),
       username: localStorage.getItem("ourAppUsername"),
       avatar: localStorage.getItem("ourAppAvatar")
-    }
+    },
+    isSearchOpen: false
   };
 
   function ourReducer(draft, action) {
@@ -45,6 +50,12 @@ function OurApp() {
       case "flashMessage":
         //return { loggedIn: state.loggedIn, flashMessages: state.flashMessages.concat(action.value) };
         draft.flashMessages.push(action.value);
+        return;
+      case "openSearch":
+        draft.isSearchOpen = true;
+        return;
+      case "closeSearch":
+        draft.isSearchOpen = false;
         return;
     }
   }
@@ -98,6 +109,15 @@ function OurApp() {
               <NotFound />
             </Route>
           </Switch>
+          {/* {state.isSearchOpen ? <Search /> : ""} */}
+          <CSSTransition
+            timeout={330}
+            in={state.isSearchOpen}
+            classNames="search-overlay"
+            unmountOnExit
+          >
+            <Search />
+          </CSSTransition>
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>
