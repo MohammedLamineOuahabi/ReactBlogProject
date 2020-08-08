@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Axios from "axios";
 
@@ -7,26 +7,28 @@ import LoadingDots from "./LoadingDots";
 
 Axios.defaults.baseURL = "http://localhost:8080";
 
-function ProfilePosts() {
+function ProfileFollow(props) {
   //using useParams to get username from url
   const { username } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const [Follows, setFollows] = useState([]);
+  const [Action, setAction] = useState(props.action);
 
   useEffect(() => {
     //async inside a function inside useEffect we can not use async inside useEffect directaly
-    async function fetchPosts() {
+    async function fetchFollows() {
       try {
-        const response = await Axios.get(`/profile/${username}/posts`);
-        //console.log(response.data);
-        setPosts(response.data);
+        //console.log(`/profile/${username}/${props.action}`);
+        const response = await Axios.get(`/profile/${username}/${props.action}`);
+        setFollows(response.data);
+        setAction(props.action);
         setIsLoading(false);
       } catch (e) {
         console.log("There Wase a problem.");
       }
     }
-    fetchPosts();
-  }, [username]);
+    fetchFollows();
+  }, [username, props.action]);
 
   if (isLoading) {
     return (
@@ -38,22 +40,24 @@ function ProfilePosts() {
   }
   return (
     <div className="list-group">
-      {posts.map(post => {
-        const date = new Date(post.createdDate);
-        const dateFormated = `${date.getDay()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+      {Follows.map((Follow, index) => {
         return (
           <Link
-            key={post._id}
-            to={`/post/${post._id}`}
+            key={index}
+            to={`/profile/${Follow.username}`}
             className="list-group-item list-group-item-action"
           >
-            <img className="avatar-tiny" src={post.author.avatar} /> <strong>{post.title}</strong>
-            <span className="text-muted small"> on {dateFormated} </span>
+            <img className="avatar-tiny" src={Follow.avatar} /> <strong>{Follow.username}</strong>
           </Link>
         );
       })}
+      {!Boolean(Follows.length) && (
+        <div className="alert alert-warning" role="alert">
+          There are no {Action} yet.
+        </div>
+      )}
     </div>
   );
 }
 
-export default ProfilePosts;
+export default ProfileFollow;
