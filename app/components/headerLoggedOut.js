@@ -15,14 +15,15 @@ function HeaderLoggedOut() {
     try {
       const response = await Axios.post("/login", { username, password });
       if (response.data) {
-        console.log(response.data);
         appDispatch({ type: "login", data: response.data });
+        appDispatch({ type: "flashMessage", value: "you have successfully logged in." });
 
         //reset values
         setUsername("");
         setPassword("");
       } else {
-        console.log("username / password incorrect.");
+        //console.log("username / password incorrect.");
+        appDispatch({ type: "flashMessage", value: "username / password incorrect." });
       }
     } catch (e) {
       console.log(e);
