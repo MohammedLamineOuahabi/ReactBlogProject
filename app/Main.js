@@ -20,6 +20,7 @@ import Profile from "./components/profile";
 import EditPost from "./components/editPost";
 import NotFound from "./components/notFound";
 import Search from "./components/search";
+import Chat from "./components/chat";
 
 import StateContext from "./context/StateContext";
 import DispatchContext from "./context/DispatchContext";
@@ -33,7 +34,9 @@ function OurApp() {
       username: localStorage.getItem("ourAppUsername"),
       avatar: localStorage.getItem("ourAppAvatar")
     },
-    isSearchOpen: false
+    isSearchOpen: false,
+    isChatOpen: false,
+    unreadChatCount: 0
   };
 
   function ourReducer(draft, action) {
@@ -57,6 +60,18 @@ function OurApp() {
       case "closeSearch":
         draft.isSearchOpen = false;
         return;
+      case "toggleChat":
+        draft.isChatOpen = !draft.isChatOpen;
+        return;
+      case "closeChat":
+        draft.isChatOpen = false;
+        return;
+      case "incUnreadChat":
+        draft.unreadChatCount++;
+        return;
+      case "clearUnreadChat":
+        draft.unreadChatCount = 0;
+        return;
     }
   }
 
@@ -72,13 +87,7 @@ function OurApp() {
       localStorage.removeItem("ourAppAvatar");
     }
   }, [state.loggedIn]);
-  // const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("ourAppToken")));
-  // const [flashMessages, setFlashMessages] = useState([]);
 
-  /* function addFlashMessage(msg) {
-    setFlashMessages(prev => prev.concat(msg));
-  }
-  */
   return (
     //    <ExampleContext.Provider value={{ addFlashMessage, setLoggedIn }}>
     <StateContext.Provider value={state}>
@@ -118,6 +127,7 @@ function OurApp() {
           >
             <Search />
           </CSSTransition>
+          <Chat />
           <Footer />
         </BrowserRouter>
       </DispatchContext.Provider>

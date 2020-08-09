@@ -21,7 +21,6 @@ function Home() {
 
     async function fetchData() {
       try {
-        console.log("token..", appState.user.token);
         const response = await Axios.post(`http://localhost:8080/getHomefeed`, {
           token: appState.user.token
         });

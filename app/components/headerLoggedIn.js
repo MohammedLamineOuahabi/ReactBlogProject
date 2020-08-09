@@ -2,6 +2,8 @@ import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 
+import Chat from "./chat";
+
 import DispatchContext from "../context/DispatchContext";
 import StateContext from "../context/StateContext";
 
@@ -16,6 +18,10 @@ function HeaderLoggedIn() {
     e.preventDefault();
     appDispatch({ type: "openSearch" });
   }
+  function handleChatIcon(e) {
+    e.preventDefault();
+    appDispatch({ type: "toggleChat" });
+  }
   return (
     <div className="flex-row my-3 my-md-0">
       <Link
@@ -28,9 +34,23 @@ function HeaderLoggedIn() {
         <i className="fas fa-search"></i>
       </Link>
       <ReactTooltip place="bottom" id="searchx" className="custom-tooltip" />
-      <span data-tip="Chat" data-for="chatx" className="mr-3 ml-3  header-chat-icon text-white">
+      <span
+        onClick={handleChatIcon}
+        data-tip="Chat"
+        data-for="chatx"
+        className={
+          "mr-3 ml-3  header-chat-icon " + (appState.unreadChatCount ? "text-danger" : "text-white")
+        }
+      >
         <i className="fas fa-comment"></i>
-        <span className="chat-count-badge text-white"> </span>
+
+        {!appState.unreadChatCount ? (
+          ""
+        ) : (
+          <span className="chat-count-badge text-white">
+            {appState.unreadChatCount < 10 ? appState.unreadChatCount : "9+"}{" "}
+          </span>
+        )}
       </span>
       <ReactTooltip place="bottom" id="chatx" className="custom-tooltip" />
       <Link
