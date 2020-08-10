@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 import StateContext from "../context/StateContext";
 
-import HeaderLoggedOut from "./HeaderLoggedOut";
-import HeaderLoggedIn from "./HeaderLoggedIn";
+import HeaderLoggedOut from "./headerLoggedOut";
+import HeaderLoggedIn from "./headerLoggedIn";
 
 function Header(props) {
   const appState = useContext(StateContext);
