@@ -6,8 +6,6 @@ import Page from "./page";
 import DispatchContext from "../context/DispatchContext";
 import StateContext from "../context/StateContext";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function CreatePost(props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();

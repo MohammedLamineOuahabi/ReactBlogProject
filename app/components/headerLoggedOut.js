@@ -3,8 +3,6 @@ import Axios from "axios";
 
 import DispatchContext from "../context/DispatchContext";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function HeaderLoggedOut() {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();

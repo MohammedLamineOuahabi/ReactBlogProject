@@ -6,8 +6,6 @@ import Page from "./page";
 import Post from "./post";
 import LoadingDots from "./loadingdots";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function ProfilePosts() {
   //using useParams to get username from url
   const { username } = useParams();

@@ -11,8 +11,6 @@ import Page from "./page";
 import LoadingDots from "./loadingdots";
 import NotFound from "./notFound";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function PostView(props) {
   // withRouter pass usefull props into our component alows work with router
   const [isLoading, setIsLoading] = useState(true);

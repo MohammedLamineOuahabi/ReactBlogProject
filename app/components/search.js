@@ -6,8 +6,6 @@ import Post from "./post";
 
 import DispatchContext from "../context/DispatchContext";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function Search() {
   const appDispatch = useContext(DispatchContext);
 

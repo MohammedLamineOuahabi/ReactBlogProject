@@ -9,8 +9,6 @@ import Page from "./page";
 import LoadingDots from "./loadingdots";
 import NotFound from "./notFound";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function EditPost(props) {
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
