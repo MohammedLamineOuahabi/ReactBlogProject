@@ -1,12 +1,12 @@
 import React, { useEffect, useContext, useRef } from "react";
-import { Link } from "react-router-dom";
 import StateContext from "../context/StateContext";
 import DispatchContext from "../context/DispatchContext";
 import { useImmer } from "use-immer";
+import { Link } from "react-router-dom";
 import io from "socket.io-client";
-const socket = io("http://localhost:8080");
 
 function Chat() {
+  const socket = useRef(null);
   const chatField = useRef(null);
   const chatLog = useRef(null);
   const appState = useContext(StateContext);
@@ -18,29 +18,29 @@ function Chat() {
 
   useEffect(() => {
     if (appState.isChatOpen) {
-      //aufocus chat text field
       chatField.current.focus();
-      //if chat is  open clear unreadChatCount
-      appDispatch({ type: "clearUnreadChat" });
+      appDispatch({ type: "clearUnreadChatCount" });
     }
   }, [appState.isChatOpen]);
 
   useEffect(() => {
-    //auto scroll when new message added
-    chatLog.current.scrollTop = chatLog.current.scrollHeight;
-    //if new message and chat is not open inc unreadChatCount
-    if (state.chatMessages.length && !appState.isChatOpen) {
-      appDispatch({ type: "incUnreadChat" });
-    }
-  }, [state.chatMessages]);
+    socket.current = io("http://localhost:8080");
 
-  useEffect(() => {
-    socket.on("chatFromServer", message => {
+    socket.current.on("chatFromServer", message => {
       setState(draft => {
         draft.chatMessages.push(message);
       });
     });
+
+    return () => socket.current.disconnect();
   }, []);
+
+  useEffect(() => {
+    chatLog.current.scrollTop = chatLog.current.scrollHeight;
+    if (state.chatMessages.length && !appState.isChatOpen) {
+      appDispatch({ type: "incrementUnreadChatCount" });
+    }
+  }, [state.chatMessages]);
 
   function handleFieldChange(e) {
     const value = e.target.value;
@@ -52,7 +52,10 @@ function Chat() {
   function handleSubmit(e) {
     e.preventDefault();
     // Send message to chat server
-    socket.emit("chatFromBrowser", { message: state.fieldValue, token: appState.user.token });
+    socket.current.emit("chatFromBrowser", {
+      message: state.fieldValue,
+      token: appState.user.token
+    });
 
     setState(draft => {
       // Add message to state collection of messages
@@ -83,7 +86,7 @@ function Chat() {
         {state.chatMessages.map((message, index) => {
           if (message.username == appState.user.username) {
             return (
-              <div className="chat-self" key={index}>
+              <div key={index} className="chat-self">
                 <div className="chat-message">
                   <div className="chat-message-inner">{message.message}</div>
                 </div>
@@ -93,14 +96,14 @@ function Chat() {
           }
 
           return (
-            <div className="chat-other" key={index}>
+            <div key={index} className="chat-other">
               <Link to={`/profile/${message.username}`}>
                 <img className="avatar-tiny" src={message.avatar} />
               </Link>
               <div className="chat-message">
                 <div className="chat-message-inner">
                   <Link to={`/profile/${message.username}`}>
-                    <strong>{message.username}:</strong>
+                    <strong>{message.username}: </strong>
                   </Link>
                   {message.message}
                 </div>

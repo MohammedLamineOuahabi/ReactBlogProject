@@ -28,7 +28,7 @@ function Profile() {
     const ourRequest = Axios.CancelToken.source();
     async function fetchData() {
       try {
-        const response = await Axios.post(`http://localhost:8080/profile/${username}`, {
+        const response = await Axios.post(`/profile/${username}`, {
           token: appState.user.token
         });
         //console.log("response .. ", response);

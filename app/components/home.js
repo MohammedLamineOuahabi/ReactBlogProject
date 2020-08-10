@@ -24,7 +24,7 @@ function Home() {
         const response = await Axios.post(`http://localhost:8080/getHomefeed`, {
           token: appState.user.token
         });
-        console.log("response .. ", response);
+
         setState(draft => {
           draft.isLoading = false;
           draft.feed = response.data;

@@ -6,8 +6,6 @@ import Page from "./page";
 
 import DispatchContext from "../context/DispatchContext";
 
-Axios.defaults.baseURL = "http://localhost:8080";
-
 function HomeGest() {
   const appDispatch = useContext(DispatchContext);
 

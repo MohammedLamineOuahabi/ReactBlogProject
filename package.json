@@ -4,7 +4,8 @@
   "description": "",
   "main": "test.js",
   "scripts": {
-    "dev": "webpack-dev-server",
+    "dev": "npm-run-all -s generate webpack",
+    "webpackdev": "webpack-dev-server",
     "clear": "webpack-dev-server",
     "build": "npm-run-all -s generate webpackBuild",
     "webpackBuild": "webpack",
@@ -17,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.9.0",
-    "@babel/node": "^7.8.7",
+    "@babel/node": "^7.10.5",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "axios": "^0.19.2",
