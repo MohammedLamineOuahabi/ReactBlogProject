@@ -3,7 +3,7 @@ import ReactDOMServer from "react-dom/server";
 import fs from "fs";
 import Footer from "./app/components/footer";
 import Header from "./app/components/header";
-import LoadingDots from "./app/components/loadingdots";
+//import LoadingDots from "./app/components/loadingdots";
 import { StaticRouter as Router } from "react-router-dom";
 import StateContext from "./app/context/StateContext";
 
@@ -12,9 +12,7 @@ function Shell() {
     <StateContext.Provider value={{ loggedIn: false }}>
       <Router>
         <Header staticEmpty={true} />
-        <div className="py-5 my-5 text-center">
-          <LoadingDots />
-        </div>
+        <div className="py-5 my-5 text-center">loading...</div>
         <Footer />
       </Router>
     </StateContext.Provider>
