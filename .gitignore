@@ -43,7 +43,7 @@
 # 20140407 Initially Published
 #
 # -----------------------------------------------------------------
-
+.env
 # ignore all files starting with . or ~
 .*
 ~*

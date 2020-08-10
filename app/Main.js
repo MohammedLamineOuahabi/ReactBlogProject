@@ -6,7 +6,8 @@ import Axios from "axios";
 
 import { CSSTransition } from "react-transition-group";
 
-Axios.defaults.baseURL = process.env.REACT_APP_BACKENDURL || "";
+Axios.defaults.baseURL =
+  process.env.REACT_APP_BACKENDURL || "https://my-react-blog-back-end.herokuapp.com";
 
 //our components
 
