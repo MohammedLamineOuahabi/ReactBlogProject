@@ -23,7 +23,7 @@ import Chat from "./components/chat";
 import NotFound from "./components/notFound";
 
 import FlashMessages from "./components/flashMessages";
-import LoadingDots from "./components/loadingDots";
+import LoadingDots from "./components/loadingdots";
 
 import StateContext from "./context/StateContext";
 import DispatchContext from "./context/DispatchContext";

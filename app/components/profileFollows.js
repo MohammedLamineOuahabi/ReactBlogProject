@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Axios from "axios";
 
 import Page from "./page";
-import LoadingDots from "./loadingDots";
+import LoadingDots from "./loadingdots";
 
 Axios.defaults.baseURL = "http://localhost:8080";
 

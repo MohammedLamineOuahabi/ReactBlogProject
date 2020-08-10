@@ -8,7 +8,7 @@ import StateContext from "../context/StateContext";
 import DispatchContext from "../context/DispatchContext";
 
 import Page from "./page";
-import LoadingDots from "./loadingDots";
+import LoadingDots from "./loadingdots";
 import NotFound from "./notFound";
 
 Axios.defaults.baseURL = "http://localhost:8080";

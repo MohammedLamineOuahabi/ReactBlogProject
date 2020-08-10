@@ -5,7 +5,7 @@ import Axios from "axios";
 
 import Page from "./page";
 import Post from "./post";
-import LoadingDots from "./loadingDots";
+import LoadingDots from "./loadingdots";
 import StateContext from "../context/StateContext";
 
 function Home() {
